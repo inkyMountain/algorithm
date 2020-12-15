@@ -2,9 +2,12 @@ const sort = (array: Array<number>) => {
   return array.sort((a, b) => a - b);
 };
 
-const merge = () => {
+type Merge = (array: Array<number>, start: number, middle: number, end: number) => Array<number>;
 
+const merge: Merge = (array, start, middle, end) => {
+  return [];
 };
 
-export default sort;
+export { sort, merge };
 
+export default sort;
