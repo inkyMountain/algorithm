@@ -1,5 +1,5 @@
-import sumIndexOfTarget from './validatePalidrome';
+import validatePalidrome from './validatePalidrome';
 
-test('sumIndexOfTarget', () => {
-  expect('dasabcbafsdj').toBeTruthy();
+test('validatePalidrome', () => {
+  expect(validatePalidrome.defaultSolution('dasabcbafsdj')).toBeTruthy();
 });
