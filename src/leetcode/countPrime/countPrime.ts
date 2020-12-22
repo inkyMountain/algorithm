@@ -7,8 +7,9 @@ type CountPrimes = (num: number) => number
 // 解释：小于 10 的质数一共有 4 个, 它们是 2, 3, 5, 7 。
 const countPrimes: CountPrimes = (num: number) => {
   let primeAmount = 0;
-  for (let i = 0; i < num; i++) {
-    if (isPrime(i)) {      primeAmount++;
+  for (let i = 2; i < num; i++) {
+    if (isPrime(i)) {
+      primeAmount++;
     }
   }
   return primeAmount;
@@ -16,13 +17,13 @@ const countPrimes: CountPrimes = (num: number) => {
 
 // 判断给定的数字是否是一个质数
 const isPrime = (num: number) => {
-  let exactDivisionAmount = 0;
-  for (let i = 1; i <= num; i++) {
+  if (num <= 1) return false
+  for (let i = 2; i * i<= num; i++) {
     if (num % i === 0) {
-      exactDivisionAmount++;
+      return false
     }
   }
-  return exactDivisionAmount === 2;
+  return true;
 };
 
 export default {

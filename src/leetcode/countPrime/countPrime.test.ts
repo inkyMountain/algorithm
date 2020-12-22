@@ -5,6 +5,7 @@ test('isPrime', () => {
   expect(isPrime(2)).toBeTruthy();
   expect(isPrime(3)).toBeTruthy();
   expect(isPrime(4)).toBeFalsy();
+  expect(isPrime(5)).toBeTruthy();
 });
 
 test('countPrime', () => {
