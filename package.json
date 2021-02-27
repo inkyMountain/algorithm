@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "jest"
+    "build": "tsc -p tsconfig.json"
   },
 
   "devDependencies": {
