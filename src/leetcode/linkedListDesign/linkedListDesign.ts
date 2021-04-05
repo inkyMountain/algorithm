@@ -1,15 +1,15 @@
 // https://leetcode-cn.com/problems/design-linked-list/
-import { LinkedListNode } from "../public";
+import { ListNode } from "../public";
 
 class LinkedList {
   // The true amount of nodes, prefix & suffix are excluded.
   length: number = 0;
-  head: LinkedListNode;
-  tail: LinkedListNode;
+  head: ListNode;
+  tail: ListNode;
 
   constructor() {
-    const virtualSuffix = new LinkedListNode(0, null);
-    const virtualPrefix = new LinkedListNode(0, virtualSuffix);
+    const virtualSuffix = new ListNode(0, null);
+    const virtualPrefix = new ListNode(0, virtualSuffix);
     this.head = virtualPrefix;
     this.tail = virtualSuffix;
   }
@@ -33,13 +33,13 @@ class LinkedList {
   }
 
   addAtHead(val: number): void {
-    const node = new LinkedListNode(val, this.head.next);
+    const node = new ListNode(val, this.head.next);
     this.head.next = node;
     this.length++;
   }
 
   addAtTail(val: number): void {
-    const node = new LinkedListNode(val, this.tail);
+    const node = new ListNode(val, this.tail);
     let current = this.head;
     while (current.next !== this.tail) {
       current = current.next;
@@ -58,11 +58,11 @@ class LinkedList {
       this.addAtTail(val);
       return;
     }
-    let nodeBeforeIndex: LinkedListNode = this.head;
+    let nodeBeforeIndex: ListNode = this.head;
     for (let i = 0; i < index; i++) {
       nodeBeforeIndex = nodeBeforeIndex.next;
     }
-    nodeBeforeIndex.next = new LinkedListNode(val, nodeBeforeIndex.next);
+    nodeBeforeIndex.next = new ListNode(val, nodeBeforeIndex.next);
     this.length++;
   }
 
@@ -70,7 +70,7 @@ class LinkedList {
     if (index < 0 || index > this.length - 1) {
       return;
     }
-    let nodeBeforeIndex: LinkedListNode = this.head;
+    let nodeBeforeIndex: ListNode = this.head;
     for (let i = 0; i < index; i++) {
       nodeBeforeIndex = nodeBeforeIndex.next;
     }
@@ -97,24 +97,6 @@ class LinkedList {
     console.log("\n");
   }
 }
-
-// const obj = new LinkedList();
-
-// obj.addAtHead(1);
-// obj.printNodeValues();
-
-// obj.addAtTail(3);
-// obj.printNodeValues();
-
-// obj.addAtIndex(1, 2);
-// obj.printNodeValues();
-
-// console.log("obj.get(1)", obj.get(1));
-
-// obj.deleteAtIndex(1);
-// obj.printNodeValues();
-
-// console.log("obj.get(1)", obj.get(1));
 
 const operations = ["MyLinkedList","addAtHead","addAtTail","addAtTail","addAtTail","addAtTail","addAtTail","addAtTail","deleteAtIndex","addAtHead","addAtHead","get","addAtTail","addAtHead","get","addAtTail","addAtIndex","addAtTail","addAtHead","addAtHead","addAtHead","get","addAtIndex","addAtHead","get","addAtHead","deleteAtIndex","addAtHead","addAtTail","addAtTail","addAtIndex","addAtTail","addAtHead","get","addAtTail","deleteAtIndex","addAtIndex","deleteAtIndex","addAtHead","addAtTail","addAtHead","addAtHead","addAtTail","addAtTail","get","get","addAtHead","addAtTail","addAtTail","addAtTail","addAtIndex","get","addAtHead","addAtIndex","addAtHead","addAtTail","addAtTail","addAtIndex","deleteAtIndex","addAtIndex","addAtHead","addAtHead","deleteAtIndex","addAtTail","deleteAtIndex","addAtIndex","addAtTail","addAtHead","get","addAtIndex","addAtTail","addAtHead","addAtHead","addAtHead","addAtHead","addAtHead","addAtHead","deleteAtIndex","get","get","addAtHead","get","addAtTail","addAtTail","addAtIndex","addAtIndex","addAtHead","addAtTail","addAtTail","get","addAtIndex","addAtHead","deleteAtIndex","addAtTail","get","addAtHead","get","addAtHead","deleteAtIndex","get","addAtTail","addAtTail"];
 const params = [[],[38],[66],[61],[76],[26],[37],[8],[5],[4],[45],[4],[85],[37],[5],[93],[10,23],[21],[52],[15],[47],[12],[6,24],[64],[4],[31],[6],[40],[17],[15],[19,2],[11],[86],[17],[55],[15],[14,95],[22],[66],[95],[8],[47],[23],[39],[30],[27],[0],[99],[45],[4],[9,11],[6],[81],[18,32],[20],[13],[42],[37,91],[36],[10,37],[96],[57],[20],[89],[18],[41,5],[23],[75],[7],[25,51],[48],[46],[29],[85],[82],[6],[38],[14],[1],[12],[42],[42],[83],[13],[14,20],[17,34],[36],[58],[2],[38],[33,59],[37],[15],[64],[56],[0],[40],[92],[63],[35],[62],[32]];
