@@ -1,4 +1,4 @@
-// https://leetcode-cn.com/problems/reverse-string/
+// https://leetcode-cn.com/problems/reverse-string-ii/submissions/
 
 export function reverseStr(s: string, k: number): string {
   if (k === 1) {
