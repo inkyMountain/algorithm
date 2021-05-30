@@ -15,7 +15,7 @@ function getCombination(nums1: number[], nums2: number[]) {
   return combination;
 }
 
-function fourSumCount(
+export function fourSum2(
   nums1: number[],
   nums2: number[],
   nums3: number[],
