@@ -21,6 +21,10 @@ test('strStr3', () => {
   ).toStrictEqual(118);
 });
 
+test('strStr4', () => {
+  expect(strStr('mississippi', 'pi')).toStrictEqual(9);
+});
+
 test('next', () => {
   const str = 'abababca';
   expect(generateNext(str, new Array(str.length).fill(0))).toStrictEqual([

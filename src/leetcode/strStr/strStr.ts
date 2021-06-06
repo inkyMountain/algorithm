@@ -13,7 +13,10 @@ export function generateNext(m: string, next: Array<number>): Array<number> {
       if (j > 0) {
         j = next[j - 1];
       } else {
+        // if j === 0 and the two chars don't match,
+        // meaning that next[i] is zero.
         i++;
+        next[i] = 0;
       }
     }
   }
@@ -21,6 +24,7 @@ export function generateNext(m: string, next: Array<number>): Array<number> {
 }
 
 export function strStr(haystack: string, needle: string): number {
+  // the init value for fill method can be arbitrary
   const next = generateNext(needle, new Array(needle.length).fill(0));
   let i = 0,
     j = 0;
