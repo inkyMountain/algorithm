@@ -1,10 +1,27 @@
-type ValidatePalidrome = (s: string) => boolean
+// https://leetcode-cn.com/problems/valid-palindrome/submissions/
 
-// 验证一个字符串，在最多删除一个字符的情况下，是否是回文字符串。
-const defaultSolution: ValidatePalidrome = (s: string) => {
+function isAlphanumeric(charCode: number) {
+  return (charCode >= 97 && charCode <= 122) || (charCode >= 48 && charCode <= 57);
+}
+
+export function isPalindrome(s: string) {
+  let str = '';
+  for (let i = 0; i < s.length; i++) {
+    const char = s.charAt(i).toLowerCase();
+    if (isAlphanumeric(char.charCodeAt(0))) {
+      str += char;
+    }
+  }
+  let left = 0,
+    right = str.length - 1;
+  while (left <= right) {
+    const leftChar = str.charAt(left);
+    const rightChar = str.charAt(right);
+    if (leftChar !== rightChar) {
+      return false;
+    }
+    left++;
+    right--;
+  }
   return true;
-};
-
-export default {
-  defaultSolution
-};
+}
