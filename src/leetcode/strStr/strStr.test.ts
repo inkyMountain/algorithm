@@ -1,4 +1,4 @@
-import {strStr} from './strStr';
+import {strStr, generateNext} from './strStr';
 
 test('strStr0', () => {
   expect(strStr('dasabcdabcaafsdj', 'abca')).toStrictEqual(7);
@@ -19,4 +19,18 @@ test('strStr3', () => {
       'bbbbbbaa'
     )
   ).toStrictEqual(118);
+});
+
+test('next', () => {
+  const str = 'abababca';
+  expect(generateNext(str, new Array(str.length).fill(0))).toStrictEqual([
+    0,
+    0,
+    1,
+    2,
+    3,
+    4,
+    0,
+    1,
+  ]);
 });

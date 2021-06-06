@@ -1,52 +1,43 @@
 // https://leetcode-cn.com/problems/implement-strstr/
 
-export function strStr(haystack: string, needle: string): number {
-  if (needle === '') {
-    return 0;
+export function generateNext(m: string, next: Array<number>): Array<number> {
+  let i = 1,
+    j = 0;
+  next[0] = 0;
+  while (i < m.length && j < m.length - 1) {
+    if (m.charAt(i) === m.charAt(j)) {
+      next[i] = j + 1;
+      i++;
+      j++;
+    } else {
+      if (j > 0) {
+        j = next[j - 1];
+      } else {
+        i++;
+      }
+    }
   }
+  return next;
+}
 
-  let index = 0;
-  while (index + needle.length <= haystack.length) {
-    // see if current index match needle
-    let lastMatchCharIndex = 0;
-    for (let i = 0; i < needle.length; i++) {
-      const charInHaystack = haystack.charAt(index + i);
-      const charInNeedle = needle.charAt(i);
-      if (charInHaystack !== charInNeedle) {
-        lastMatchCharIndex = i - 1;
-        break;
-      }
-      if (i === needle.length - 1) {
-        lastMatchCharIndex = i;
-      }
-    }
-    if (lastMatchCharIndex === -1) {
-      index++;
-      continue;
-    }
-    if (lastMatchCharIndex === needle.length - 1) {
-      return index;
-    }
-
-    // if doesn't match, caculate the length we need to move.
-    let maxEqualNumber = 0;
-    for (let i = 0; i < lastMatchCharIndex + 1; i++) {
-      let equalNumber = 0;
-      const matchedSubStr = needle.substring(0, i + 1);
-      for (let j = 0; j < i; j++) {
-        const prefix = matchedSubStr.substr(0, j + 1);
-        const suffix = matchedSubStr.substr(-j - 1);
-        if (prefix === suffix && prefix.length > equalNumber) {
-          equalNumber = prefix.length;
-        }
-      }
-      if (equalNumber > maxEqualNumber) {
-        maxEqualNumber = equalNumber;
+export function strStr(haystack: string, needle: string): number {
+  const next = generateNext(needle, new Array(needle.length).fill(0));
+  let i = 0,
+    j = 0;
+  while (i < haystack.length && j < needle.length) {
+    if (haystack[i] === needle[j]) {
+      i++;
+      j++;
+    } else {
+      if (j > 0) {
+        j = next[j - 1];
+      } else {
+        i++;
       }
     }
-    const step =
-      maxEqualNumber === 0 ? 1 : lastMatchCharIndex - maxEqualNumber + 1;
-    index += step;
+  }
+  if (j === needle.length) {
+    return i - j;
   }
   return -1;
 }
