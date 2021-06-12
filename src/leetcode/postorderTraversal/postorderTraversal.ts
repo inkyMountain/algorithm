@@ -16,23 +16,48 @@ export class TreeNode {
   }
 }
 
-function traversal(node: TreeNode, result: number[]) {
-  if (node.left) {
-    traversal(node.left, result);
-  }
-  if (node.right) {
-    traversal(node.right, result);
-  }
-  result.push(node.val);
-}
-
+// traverse by iteration
 export function postorderTraversal(root: TreeNode | null): number[] {
   if (!root) {
     return [];
   }
+  const stack = [root];
   const result = [];
-  traversal(root, result);
+
+  while (stack.length > 0) {
+    const node = stack[stack.length - 1];
+    if (!node.left && !node.right) {
+      result.push(node.val);
+      stack.pop();
+    }
+    if (node.right) {
+      stack.push(node.right);
+      node.right = null;
+    }
+    if (node.left) {
+      stack.push(node.left);
+      node.left = null;
+    }
+  }
   return result;
 }
 
-
+// traverse by recursion
+// function traversal(node: TreeNode, result: number[]) {
+//   if (node.left) {
+//     traversal(node.left, result);
+//   }
+//   if (node.right) {
+//     traversal(node.right, result);
+//   }
+//   result.push(node.val);
+// }
+//
+// export function postorderTraversal(root: TreeNode | null): number[] {
+//   if (!root) {
+//     return [];
+//   }
+//   const result = [];
+//   traversal(root, result);
+//   return result;
+// }

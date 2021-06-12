@@ -16,21 +16,31 @@ class TreeNode {
   }
 }
 
-function traversal(node: TreeNode, result: number[]) {
-  if (node.left) {
-    traversal(node.left, result);
-  }
-  result.push(node.val);
-  if (node.right) {
-    traversal(node.right, result);
-  }
-}
-
+// traverse by iteration
 export function inorderTraversal(root: TreeNode | null): number[] {
   if (!root) {
     return [];
   }
   const result = [];
-  traversal(root, result);
   return result;
 }
+
+// traverse by recursion
+// function traversal(node: TreeNode, result: number[]) {
+//   if (node.left) {
+//     traversal(node.left, result);
+//   }
+//   result.push(node.val);
+//   if (node.right) {
+//     traversal(node.right, result);
+//   }
+// }
+//
+// export function inorderTraversal(root: TreeNode | null): number[] {
+//   if (!root) {
+//     return [];
+//   }
+//   const result = [];
+//   traversal(root, result);
+//   return result;
+// }
