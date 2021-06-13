@@ -22,24 +22,18 @@ export function inorderTraversal(root: TreeNode | null): number[] {
     return [];
   }
   const result = [];
-  const stack = [root];
-  while (stack.length > 0) {
-    const node = stack.pop();
-    if (!node.left && !node.right) {
-      result.push(node.val);
+  const stack = [];
+  let node = root;
+  while (node !== null || stack.length !== 0) {
+    while (node !== null) {
+      stack.push(node);
+      node = node.left;
     }
-    if (node.right || node.left) {
-      if (node.right) {
-        stack.push(node.right);
-        node.right = null;
-      }
-      stack.push(node)
-      if (node.left) {
-        stack.push(node.left);
-        node.left = null;
-      }
-    }
+    node = stack.pop();
+    result.push(node.val);
+    node = node.right;
   }
+
   return result;
 }
 
