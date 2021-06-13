@@ -21,20 +21,30 @@ export function postorderTraversal(root: TreeNode | null): number[] {
   if (!root) {
     return [];
   }
-  // use stack to ensure traverse order
-  const stack = [root];
   const result = [];
-  while (stack.length > 0) {
-    const node = stack.pop();
-    result.push(node.val);
-    if (node.left) {
-      stack.push(node.left);
+  const stack = [];
+  let node = root;
+  let previous = null;
+  while (node !== null || stack.length > 0) {
+    while (node !== null) {
+      stack.push(node);
+      node = node.left;
     }
-    if (node.right) {
-      stack.push(node.right);
+    node = stack.pop();
+    // if the node has no right node or we have entered the right node, push
+    // current node value. cause the right node's value has been pushed.
+    if (node.right === null || node.right === previous) {
+      result.push(node.val);
+      previous = node;
+      node = null;
+    } else {
+      // if the node has right node, push current node back to stack and
+      // continue loop with the right node.
+      stack.push(node);
+      node = node.right;
     }
   }
-  return result.reverse();
+  return result;
 }
 
 // export function postorderTraversal(root: TreeNode | null): number[] {
