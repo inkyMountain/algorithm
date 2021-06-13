@@ -4,7 +4,7 @@
  * Definition for a binary tree node.
  */
 
-class TreeNode {
+export class TreeNode {
   val: number;
   left: TreeNode | null;
   right: TreeNode | null;
@@ -22,6 +22,24 @@ export function inorderTraversal(root: TreeNode | null): number[] {
     return [];
   }
   const result = [];
+  const stack = [root];
+  while (stack.length > 0) {
+    const node = stack.pop();
+    if (!node.left && !node.right) {
+      result.push(node.val);
+    }
+    if (node.right || node.left) {
+      if (node.right) {
+        stack.push(node.right);
+        node.right = null;
+      }
+      stack.push(node)
+      if (node.left) {
+        stack.push(node.left);
+        node.left = null;
+      }
+    }
+  }
   return result;
 }
 

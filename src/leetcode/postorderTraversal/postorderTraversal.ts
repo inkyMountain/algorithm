@@ -21,26 +21,46 @@ export function postorderTraversal(root: TreeNode | null): number[] {
   if (!root) {
     return [];
   }
+  // use stack to ensure traverse order
   const stack = [root];
   const result = [];
-
   while (stack.length > 0) {
-    const node = stack[stack.length - 1];
-    if (!node.left && !node.right) {
-      result.push(node.val);
-      stack.pop();
+    const node = stack.pop();
+    result.push(node.val);
+    if (node.left) {
+      stack.push(node.left);
     }
     if (node.right) {
       stack.push(node.right);
-      node.right = null;
-    }
-    if (node.left) {
-      stack.push(node.left);
-      node.left = null;
     }
   }
-  return result;
+  return result.reverse();
 }
+
+// export function postorderTraversal(root: TreeNode | null): number[] {
+//   if (!root) {
+//     return [];
+//   }
+//   const stack = [root];
+//   const result = [];
+//
+//   while (stack.length > 0) {
+//     const node = stack[stack.length - 1];
+//     if (!node.left && !node.right) {
+//       result.push(node.val);
+//       stack.pop();
+//     }
+//     if (node.right) {
+//       stack.push(node.right);
+//       node.right = null;
+//     }
+//     if (node.left) {
+//       stack.push(node.left);
+//       node.left = null;
+//     }
+//   }
+//   return result;
+// }
 
 // traverse by recursion
 // function traversal(node: TreeNode, result: number[]) {
