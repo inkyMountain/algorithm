@@ -21,18 +21,20 @@ export function preorderTraversal(root: TreeNode | null): number[] {
   if (!root) {
     return [];
   }
-  // use stack to ensure traverse order
-  const stack = [root];
+
+  const stack = [];
   const result = [];
-  while (stack.length > 0) {
-    const node = stack.pop();
-    result.push(node.val);
-    if (node.right) {
-      stack.push(node.right);
+  let node = root;
+  while (stack.length > 0 || node !== null) {
+    while (node !== null) {
+      // expand the binary tree to bottom left. preorder traversal requires
+      // center first, left second, so we push value during expanding.
+      result.push(node.val);
+      stack.push(node);
+      node = node.left;
     }
-    if (node.left) {
-      stack.push(node.left);
-    }
+    node = stack.pop();
+    node = node.right;
   }
   return result;
 }
