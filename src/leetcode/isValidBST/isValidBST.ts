@@ -11,19 +11,17 @@ export class TreeNode {
 }
 
 export function isValidBST(root: TreeNode | null): boolean {
-  return helper(root, );
+  return helper(root, -Infinity, Infinity);
 }
 
 const helper = (node: TreeNode | null, lower: number, upper: number) => {
   if (node === null) {
     return true;
   }
-  const isRightNodeValid = node.right === null || node.val < node.right.val;
-  const isLeftNodeValid = node.left === null || node.val > node.left.val;
+  const isNodeValid = node.val > lower && node.val < upper;
   return (
-    isRightNodeValid &&
-    isLeftNodeValid &&
-    helper(node.left) &&
-    helper(node.right)
+    isNodeValid &&
+    helper(node.left, lower, node.val) &&
+    helper(node.right, node.val, upper)
   );
 };
