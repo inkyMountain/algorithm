@@ -1,4 +1,4 @@
-import {minDiffInBST, TreeNode} from './minDiffinBST';
+import {minDiffInBST, TreeNode} from './minDiffInBST';
 
 test('minDiffInBST0', () => {
   const result = minDiffInBST(
