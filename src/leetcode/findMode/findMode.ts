@@ -26,11 +26,16 @@ export function findMode(root: TreeNode | null): number[] {
 
     previous = current === null ? null : current;
     current = node.val;
+    // first count the times current number has appeared
     if (current === previous) {
       count++;
     } else {
       count = 1;
     }
+    // if it appears more frequently than previous most-appeared number,
+    // push the current number into result.
+    // else replace the result array with current number, for the previous
+    // result is not the most frequent.
     if (count === maxCount) {
       result.push(current);
     } else if (count > maxCount) {
