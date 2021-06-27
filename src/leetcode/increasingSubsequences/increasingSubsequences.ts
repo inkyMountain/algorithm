@@ -1,6 +1,6 @@
 // https://leetcode-cn.com/problems/increasing-subsequences/
 
-export function findSubsequences(nums: number[]): number[][] {
+export function increasingSubsequences(nums: number[]): number[][] {
   const result = [];
   const fragments = [];
   const recurse = (startIndex: number) => {
