@@ -13,27 +13,21 @@ export function solveNQueens(n: number): string[][] {
   }
 
   const isValid = (row: number, column: number): boolean => {
-    //  check right-top to left-bottom direction
-    for (let i = 0; i < n; i++) {
-      if (
-        cheseboard[row + i]?.charAt(column + i) === 'Q' ||
-        cheseboard[row - i]?.charAt(column - i) === 'Q'
-      ) {
+    //  check right-top direction
+    for (let x = column + 1, y = row - 1; x < n && y >= 0; x++, y--) {
+      if (cheseboard[y]?.charAt(x) === 'Q') {
         return false
       }
     }
-    //  check right-bottom to left-top direction
-    for (let i = 0; i < n; i++) {
-      if (
-        cheseboard[row + i]?.charAt(column - i) === 'Q' ||
-        cheseboard[row - i]?.charAt(column + i) === 'Q'
-      ) {
+    //  check left-top direction
+    for (let x = column - 1, y = row - 1; x >= 0 && y >= 0; x--, y--) {
+      if (cheseboard[y]?.charAt(x) === 'Q') {
         return false
       }
     }
     //  check vertical direction
-    for (let i = 0; i < n; i++) {
-      if (cheseboard[i]?.charAt(column) === 'Q') {
+    for (let y = row - 1; y >= 0; y--) {
+      if (cheseboard[y]?.charAt(column) === 'Q') {
         return false
       }
     }
