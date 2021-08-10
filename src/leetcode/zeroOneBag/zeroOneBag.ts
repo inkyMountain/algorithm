@@ -12,6 +12,8 @@ export function zeroOneBag(): number {
       if (j >= weight[i]) {
         dp[j] = Math.max(dp[j] ?? 0,  xxx + values[i])
       } else {
+        // 进入这个分支的话，说明背包容量 j 比 i 物品的重量小，所以 i 物品是无法放入背包的。
+        // 也就不存在上文 Math.max 的 dp[j - weight[i]] + values[i] 条件了。
         dp[j] = dp[j] ?? 0
       }
     }
