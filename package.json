@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "test": "jest"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.12.10",
