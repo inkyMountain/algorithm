@@ -13,3 +13,9 @@ test('wordBreak2', () => {
     wordBreak('catsandog', ['cats', 'dog', 'sand', 'and', 'cat'])
   ).toStrictEqual(false)
 })
+
+test('wordBreak3', () => {
+  expect(
+    wordBreak('peachapple', ['peac', 'h', 'apple'])
+  ).toStrictEqual(true)
+})
