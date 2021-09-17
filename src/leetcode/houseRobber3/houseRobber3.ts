@@ -12,13 +12,14 @@ export function rob(root: TreeNode): number {
     if (node === null) {
       return
     }
-    dfs(node.left)
     dfs(node.right)
+    dfs(node.left)
     const leftSkipNum = skip.get(node.left) || 0
     const rightSkipNum = skip.get(node.right) || 0
     const leftNonSkipNum = nonSkip.get(node.left) || 0
     const rightNonSkipNum = nonSkip.get(node.right) || 0
-    nonSkip.set(node, Math.max(leftSkipNum, rightSkipNum) + node.val)
+
+    nonSkip.set(node, leftSkipNum + rightSkipNum + node.val)
     skip.set(
       node,
       Math.max(leftSkipNum, leftNonSkipNum) +
