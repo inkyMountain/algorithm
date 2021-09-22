@@ -23,6 +23,5 @@ export function maxProfit(k: number, prices: number[]): number {
     }
   }
 
-  const result = dp[prices.length - 1][k][0]
-  return result
+  return dp[prices.length - 1][k][0]
 }
