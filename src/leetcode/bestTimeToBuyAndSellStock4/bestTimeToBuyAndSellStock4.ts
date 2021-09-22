@@ -6,7 +6,7 @@ export function maxProfit(k: number, prices: number[]): number {
   // .fill(0).map() CAN'T be shortened as .fill()!!,
   // or there would be only one object instead of an amount of prices' length.
   const dp = new Array(prices.length).fill(0).map(() => {
-    return new Array(k + 1).fill(0).map(() => new Array(2).fill(0))
+    return new Array(k + 1).fill(0).map(() => new Array(2).fill(-Infinity))
   })
   for (let i = 0; i < prices.length; i++) {
     dp[i][0][0] = 0
