@@ -2,7 +2,7 @@
 
 /**
  * The solution:
- * given the string s, iterates from s.substr(0, 1) to s.substr(0, s.length).
+ * given the string s, iterates psfrom s.substr(0, 1) to s.substr(0, s.length).
  * Then iterates wordDict, if a word is the suffix the of substring,
  * and the prefix is in the dp array (which means it meets the rule),
  * the whole substring meets the rule. so mark it true in the dp array.
