@@ -29,6 +29,7 @@ export function numDistinct(s: string, t: string): number {
   dp[0] = 1
 
   for (let i = 1; i <= s.length; i++) {
+    // reverse loop direction to access stale data
     for (let j = t.length; j > 0; j--) {
       if (s[i - 1] === t[j - 1]) {
         dp[j] = dp[j - 1] + dp[j]
