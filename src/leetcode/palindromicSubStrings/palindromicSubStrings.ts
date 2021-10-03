@@ -7,6 +7,7 @@ export function countSubstrings(s: string): number {
 
   let total = 0
 
+  // loop from bottom to top, because dp[i][j] relies on the i + 1 line.
   for (let i = s.length - 1; i >= 0; i--) {
     for (let j = i; j < s.length; j++) {
       if (s[i] === s[j]) {
