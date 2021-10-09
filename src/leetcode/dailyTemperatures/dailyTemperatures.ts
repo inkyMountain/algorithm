@@ -16,7 +16,7 @@
 
 // O(n)
 export function dailyTemperatures(temperatures: number[]): number[] {
-  // At first i tried to copy result, so i can use copy.shift()
+  // At first i tried to copy temperature array, so i can use copy.shift()
   // to get next temperature. it eased my operation but drastically 
   // increase the time consumed. So instead I use in-place operation
   // and it saved lots of time.
