@@ -10,6 +10,7 @@ export function generateRootTreeNode(nums: Array<number> | null) {
 
     const left = nums[leftIndex]
     const right = nums[rightIndex]
+
     return new TreeNode(
       nums[index],
       left === null || leftIndex >= nums.length
