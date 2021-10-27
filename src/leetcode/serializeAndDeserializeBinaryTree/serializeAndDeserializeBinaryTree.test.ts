@@ -22,20 +22,24 @@ const node3 = new TreeNode(
 
 describe('onlySerialize', () => {
   it('serialize0', () => {
-    expect(serialize(node3)).toStrictEqual('123xx45')
+    expect(serialize(node3)).toStrictEqual(
+      JSON.stringify([1, 2, 3, null, null, 4, 5])
+    )
   })
   it('serialize1', () => {
-    expect(serialize(node2)).toStrictEqual('12')
+    expect(serialize(node2)).toStrictEqual(JSON.stringify([1, 2]))
   })
 })
 
 describe('onlyDeserialize', () => {
   it('deserialize0', () => {
-    const deserialized = deserialize('123xx45')
+    const deserialized = deserialize(
+      JSON.stringify([1, 2, 3, null, null, 4, 5])
+    )
     expect(deserialized).toStrictEqual(node3)
   })
   it('deserialize1', () => {
-    const deserialized = deserialize('12')
+    const deserialized = deserialize(JSON.stringify([1, 2]))
     expect(deserialized).toStrictEqual(node2)
   })
 })
@@ -51,57 +55,6 @@ describe('serializeAndDeserializeBinaryTree', () => {
     expect(deserialize(serialize(node2))).toStrictEqual(node2)
   })
   it('serializeAndDeserializeBinaryTree3', () => {
-    const deserialized = deserialize(serialize(node1))
-    expect(deserialized).toStrictEqual(node1)
-  })
-
-  it('serializeAndDeserializeBinaryTree3', () => {
-    new TreeNode(
-      4,
-      new TreeNode(-7),
-      new TreeNode(
-        -3,
-        new TreeNode(
-          -9,
-          new TreeNode(9, null, new TreeNode(6)),
-          new TreeNode(-7, null, new TreeNode(-6))
-        ),
-        new TreeNode(-3, new TreeNode(-4))
-      )
-    )
-    const node = [
-      4,
-      -7,
-      -3,
-      null,
-      null,
-      -9,
-      -3,
-      9,
-      -7,
-      -4,
-      null,
-      6,
-      null,
-      -6,
-
-      -6,
-      null,
-      null,
-      0,
-      6,
-      5,
-      null,
-      9,
-      null,
-      null,
-      -1,
-      -4,
-      null,
-      null,
-      null,
-      -2,
-    ]
     const deserialized = deserialize(serialize(node1))
     expect(deserialized).toStrictEqual(node1)
   })

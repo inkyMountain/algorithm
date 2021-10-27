@@ -2,15 +2,16 @@
 
 import TreeNode from '../../dataStructure/TreeNode'
 
-const NULL = 'x'
-
 export function serialize(root: TreeNode | null): string {
+  if (root === null) {
+    return JSON.stringify(root)
+  }
   const result = []
   const queue = [root]
   while (queue.length > 0) {
     const head = queue.shift()
     if (head === null) {
-      result.push(NULL)
+      result.push(null)
     } else {
       result.push(head.val)
       queue.push(head.left)
@@ -18,18 +19,19 @@ export function serialize(root: TreeNode | null): string {
     }
   }
 
-  while (result[result.length - 1] === NULL) {
+  while (result[result.length - 1] === null) {
     result.pop()
   }
 
-  return result.join('')
+  return JSON.stringify(result)
 }
 
-export function deserialize(data: string): TreeNode | null {
-  if (data.length === 0) {
+export function deserialize(data: any): TreeNode | null {
+  data = JSON.parse(data) as Array<number>
+  if (data === null || data?.length === 0) {
     return null
   }
-  const treeArray = data.split('').map((val) => (val === NULL ? null : +val))
+  const treeArray = data.map((val) => (val === null ? null : +val))
   return generateRootTreeNode(treeArray)
 }
 
