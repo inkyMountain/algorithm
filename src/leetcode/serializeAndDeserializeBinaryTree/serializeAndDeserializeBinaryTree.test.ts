@@ -22,24 +22,20 @@ const node3 = new TreeNode(
 
 describe('onlySerialize', () => {
   it('serialize0', () => {
-    expect(serialize(node3)).toStrictEqual(
-      JSON.stringify([1, 2, 3, null, null, 4, 5])
-    )
+    expect(serialize(node3)).toStrictEqual('1,2,3,x,x,4,5')
   })
   it('serialize1', () => {
-    expect(serialize(node2)).toStrictEqual(JSON.stringify([1, 2]))
+    expect(serialize(node2)).toStrictEqual('1,2')
   })
 })
 
 describe('onlyDeserialize', () => {
   it('deserialize0', () => {
-    const deserialized = deserialize(
-      JSON.stringify([1, 2, 3, null, null, 4, 5])
-    )
+    const deserialized = deserialize('1,2,3,x,x,4,5')
     expect(deserialized).toStrictEqual(node3)
   })
   it('deserialize1', () => {
-    const deserialized = deserialize(JSON.stringify([1, 2]))
+    const deserialized = deserialize('1,2')
     expect(deserialized).toStrictEqual(node2)
   })
 })
