@@ -12,6 +12,7 @@ export function numDecodings(s: string): number {
     const current = parseInt(s[i])
     const prev = parseInt(s[i - 1])
     const join = prev * 10 + current
+    // if current is 0, dp[i] can only possibly move from dp[i - 2]
     if (current === 0) {
       if (join <= 26 && join > 0) {
         dp[i] = dp[i - 2] ?? 1
@@ -20,6 +21,8 @@ export function numDecodings(s: string): number {
         return 0
       }
     }
+
+    // if current isn't 0, dp[i] can possibly move from dp[i - 1] and dp[i - 2]
     dp[i] = dp[i - 1]
     if (prev === 0) {
       dp[i] = dp[i - 1]
