@@ -1,27 +1,24 @@
-import {numDecodings} from './zigzagTravesal'
+import {zigzagLevelOrder} from './zigzagTravesal'
+import TreeNode from '../../dataStructure/TreeNode'
 
-describe('decodeWays', () => {
-  it('decodeWays0', () => {
-    expect(numDecodings('2101')).toStrictEqual(1)
+describe('zigzagLevelOrder', () => {
+  it('zigzagLevelOrder0', () => {
+    expect(
+      zigzagLevelOrder(
+        new TreeNode(
+          3,
+          new TreeNode(9),
+          new TreeNode(20, new TreeNode(15), new TreeNode(7))
+        )
+      )
+    ).toStrictEqual([[3], [20, 9], [15, 7]])
   })
 
-  it('decodeWays1', () => {
-    expect(numDecodings('06')).toStrictEqual(0)
+  it('zigzagLevelOrder1', () => {
+    expect(zigzagLevelOrder(new TreeNode(1))).toStrictEqual([[1]])
   })
 
-  it('decodeWays2', () => {
-    expect(numDecodings('0')).toStrictEqual(0)
-  })
-
-  it('decodeWays3', () => {
-    expect(numDecodings('226')).toStrictEqual(3)
-  })
-
-  it('decodeWays4', () => {
-    expect(numDecodings('22601')).toStrictEqual(0)
-  })
-
-  it('decodeWays5', () => {
-    expect(numDecodings('101')).toStrictEqual(1)
+  it('zigzagLevelOrder2', () => {
+    expect(zigzagLevelOrder(null)).toStrictEqual([])
   })
 })
