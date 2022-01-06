@@ -1,6 +1,7 @@
 node_modules
 .idea
 .vscode
+.history
 dist
 yarn-error.log
 .DS_Store
