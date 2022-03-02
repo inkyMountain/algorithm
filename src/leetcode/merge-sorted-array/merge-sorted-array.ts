@@ -1,11 +1,9 @@
-/*
- * @lc app=leetcode.cn id=88 lang=typescript
- *
- * [88] 合并两个有序数组
- */
-
-// @lc code=start
-function merge(nums1: number[], m: number, nums2: number[], n: number): void {
+export function merge(
+  nums1: number[],
+  m: number,
+  nums2: number[],
+  n: number
+): void {
   let index1 = m - 1,
     index2 = n - 1,
     target = m + n - 1
@@ -28,4 +26,3 @@ function merge(nums1: number[], m: number, nums2: number[], n: number): void {
     }
   }
 }
-// @lc code=end
