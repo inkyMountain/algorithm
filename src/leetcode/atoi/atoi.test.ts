@@ -1,4 +1,4 @@
-import {myAtoi} from './paper'
+import {myAtoi} from './atoi'
 
 describe('myAtoi', () => {
   test('myAtoi1', () => {
