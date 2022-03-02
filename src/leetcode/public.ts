@@ -1,26 +1,26 @@
 export class ListNode {
-  val: number;
-  next: ListNode | null;
+  val: number
+  next: ListNode | null
 
   constructor(val: number, next?: ListNode | null) {
-    this.val = val === undefined ? 0 : val;
-    this.next = next === undefined ? null : next;
+    this.val = val === undefined ? 0 : val
+    this.next = next === undefined ? null : next
   }
 }
 
 export class DoubleLinkedListNode {
-  val: number;
-  next: DoubleLinkedListNode | null;
-  prev: DoubleLinkedListNode | null;
+  val: number
+  next: DoubleLinkedListNode | null
+  prev: DoubleLinkedListNode | null
 
   constructor(
     val: number,
     prev: DoubleLinkedListNode | null,
     next?: DoubleLinkedListNode | null
   ) {
-    this.val = val === undefined ? 0 : val;
-    this.next = next || null;
-    this.prev = prev || null;
+    this.val = val === undefined ? 0 : val
+    this.next = next || null
+    this.prev = prev || null
   }
 }
 
@@ -30,26 +30,26 @@ export const generateHeadNode = (
   index: number | undefined = 0,
   tailConnectIndex?: number
 ) => {
-  let tail: ListNode = null;
-  let previousNode: ListNode = null;
-  let tailConnectNode: ListNode = null;
-  let currentNode: ListNode = null;
+  let tail: ListNode = null
+  let previousNode: ListNode = null
+  let tailConnectNode: ListNode = null
+  let currentNode: ListNode = null
   for (let i = values.length - 1; i >= 0; i--) {
-    currentNode = new ListNode(values[i], previousNode);
-    previousNode = currentNode;
+    currentNode = new ListNode(values[i], previousNode)
+    previousNode = currentNode
     if (i === tailConnectIndex) {
-      tailConnectNode = currentNode;
+      tailConnectNode = currentNode
     }
     if (i === values.length - 1) {
-      tail = currentNode;
+      tail = currentNode
     }
   }
 
   if (tailConnectNode) {
-    tail.next = tailConnectNode;
+    tail.next = tailConnectNode
   }
-  return currentNode;
-};
+  return currentNode
+}
 
 // recurse generation
 // let cycleNode: ListNode = null;
