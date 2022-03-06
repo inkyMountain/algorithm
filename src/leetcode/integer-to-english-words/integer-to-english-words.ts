@@ -36,7 +36,7 @@ const digits = [
   'Nine',
 ]
 
-export function numberToWords(num: number | string): string {
+function numberToWords(num: number | string): string {
   if (num === 0) {
     return 'Zero'
   }
@@ -78,9 +78,8 @@ function segmentToWords(segment: string, index: number): string {
     }
   } else {
     // e.g. 20 should be twenty instead of twenty zero
-    rest = `${tenths[second]} ${digits[third] === 'Zero' ? '' : digits[third]}`
+    rest = ` ${tenths[second]} ${digits[third] === 'Zero' ? '' : digits[third]} `
   }
-  rest = index === 0 ? rest : rest + ' '
   const unit = (hundred + rest).trim() === '' ? '' : units[index]
 
   return ` ${hundred} ${rest} ${unit} `
