@@ -1,48 +1,50 @@
-class MedianFinder {
-  maxHeap = new Heap('max')
-  minHeap = new Heap('min')
+export class MedianFinder {
+  smallerHeap = new Heap('max')
+  biggerHeap = new Heap('min')
   length = 0
 
   get median() {
     const isEven = this.length % 2 === 0
     if (isEven) {
-      const maxHeapTop = this.maxHeap.top()
-      const minHeapTop = this.minHeap.top()
-      if (this.maxHeap.size > 0 && this.minHeap.size > 0) {
-        return (maxHeapTop + minHeapTop) / 2
+      const smallerHeapTop = this.smallerHeap.top()
+      const biggerHeapTop = this.biggerHeap.top()
+      if (this.smallerHeap.size > 0 && this.biggerHeap.size > 0) {
+        return (smallerHeapTop + biggerHeapTop) / 2
       } else {
-        return maxHeapTop || minHeapTop
+        return smallerHeapTop || biggerHeapTop
       }
     } else {
-      return this.maxHeap.top()
+      return this.smallerHeap.top()
     }
   }
 
   addNum(num: number) {
     this.length++
     if (num >= this.median) {
-      this.minHeap.insert(num)
-      if (this.minHeap.size > this.maxHeap.size) {
-        this.maxHeap.insert(this.minHeap.extractTop())
-      }
-      // todo 思考这里的情况
+      this.biggerHeap.insert(num)
       /**
-       * minHeap 1 2
-       * maxHeap 1
-       * 
-       * minHeap 1 2
-       * maxHeap 1 1
-       * 
-       * minHeap 1
-       * maxHeap 1 2
-       * 
-       * minHeap 1
-       * maxHeap 1 1 2
+       * 1代表heap中原有数据，2代表新插入的数据。
+       * 下面列出插入新数据后，可能出现的四种情况。
+       *
+       * biggerHeap 1 2
+       * smallerHeap 1
+       *
+       * biggerHeap 1 2
+       * smallerHeap 1 1
+       *
+       * biggerHeap 1
+       * smallerHeap 1 2
+       *
+       * biggerHeap 1
+       * smallerHeap 1 1 2
        */
+      if (this.biggerHeap.size > this.smallerHeap.size) {
+        this.smallerHeap.insert(this.biggerHeap.extractTop())
+      }
     } else {
-      this.maxHeap.insert(num)
-      if (this.maxHeap.size - this.minHeap.size === 2) {
-        this.minHeap.insert(this.maxHeap.extractTop())
+      this.smallerHeap.insert(num)
+      if (this.smallerHeap.size - this.biggerHeap.size === 2) {
+        this.biggerHeap.insert(this.smallerHeap.extractTop())
       }
     }
   }
@@ -51,16 +53,17 @@ class MedianFinder {
     return this.median
   }
 }
+
 class Heap {
   heap: number[] = []
-  type: 'max' | 'min' = 'max'
+  heapType: 'max' | 'min' = 'max'
 
   get size() {
     return this.heap.length
   }
 
   constructor(type?: 'max' | 'min') {
-    this.type = type
+    this.heapType = type
   }
 
   siftUp(index: number) {
@@ -78,8 +81,9 @@ class Heap {
     }
   }
 
+  // Heap 类需要同时兼容最大堆和最小堆，使用该方法封装比较的细节。
   isGreater(index1: number, index2: number) {
-    if (this.type === 'max') {
+    if (this.heapType === 'max') {
       return this.heap[index1] > this.heap[index2]
     } else {
       return this.heap[index2] > this.heap[index1]
@@ -125,30 +129,3 @@ class Heap {
     return this.heap[0]
   }
 }
-
-const median = new MedianFinder()
-median.addNum(0)
-median.addNum(0)
-median.findMedian()
-// median.addNum(1)
-// median.addNum(3)
-// median.addNum(2)
-// median.addNum(8)
-// median.addNum(4)
-// median.addNum(5)
-
-console.log('median ==========>', median.maxHeap.heap, median.minHeap.heap)
-
-// const maxHeap = new Heap('min')
-// maxHeap.insert(1)
-// maxHeap.insert(3)
-// maxHeap.insert(2)
-// maxHeap.insert(8)
-// maxHeap.insert(4)
-
-// console.log('maxHeap ==========>', maxHeap.heap, [
-//   maxHeap.extractTop(),
-//   maxHeap.extractTop(),
-//   maxHeap.extractTop(),
-//   maxHeap.extractTop(),
-// ])
