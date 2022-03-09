@@ -1,8 +1,5 @@
-/*
- * @lc app=leetcode.cn id=449 lang=typescript
- *
- * [449] 序列化和反序列化二叉搜索树
- */
+// https://leetcode-cn.com/problems/serialize-and-deserialize-bst/
+
 class TreeNode {
   val: number
   left: TreeNode | null
@@ -14,21 +11,15 @@ class TreeNode {
   }
 }
 
-// @lc code=start
 /**
- * Definition for a binary tree node.
- * class TreeNode {
- *     val: number
- *     left: TreeNode | null
- *     right: TreeNode | null
- *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.left = (left===undefined ? null : left)
- *         this.right = (right===undefined ? null : right)
- *     }
- * }
+ * 如果是普通的二叉树，那么序列化和反序列化，有两种方法。
+ * 第一种是将null节点以_序列化，从而可以反序列化为唯一的二叉树。
+ * 第二种是使用中序+先序或者中序+后序的方式。
+ * 
+ * 对于二叉搜索树，可以利用其性质，在递归建树时，
+ * 限定一个节点的范围，如果超出这个范围，就说明当前递归函数不应该构建节点。
+ * 这种限定范围的方法，与中序+先or后序的道理是相同的。
  */
-
 function serialize(root: TreeNode | null): string {
   let result = ''
   function traverse(node: TreeNode) {
@@ -67,16 +58,3 @@ function deserialize(data: string): TreeNode | null {
   }
   return traverse(-Infinity, Infinity)
 }
-
-/**
- * Your functions will be called as such:
- * deserialize(serialize(root));
- */
-// @lc code=end
-
-const result = deserialize(serialize(null))
-// const result = deserialize(
-//   serialize(new TreeNode(2, new TreeNode(1), new TreeNode(3)))
-// )
-
-console.log(result)
