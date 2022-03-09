@@ -1,10 +1,3 @@
-/*
- * @lc app=leetcode.cn id=208 lang=typescript
- *
- * [208] 实现 Trie (前缀树)
- */
-
-// @lc code=start
 interface TrieNode {
   count?: number
   value?: Record<string, TrieNode>
@@ -56,20 +49,3 @@ class Trie {
     return true
   }
 }
-
-/**
- * Your Trie object will be instantiated and called as such:
- * var obj = new Trie()
- * obj.insert(word)
- * var param_2 = obj.search(word)
- * var param_3 = obj.startsWith(prefix)
- */
-// @lc code=end
-
-export const trie = new Trie()
-trie.insert('hello')
-trie.insert('hello')
-const result = trie.startsWith('hell')
-const result2 = trie.search('hell')
-const result3 = trie.search('hello')
-console.log(result, result2, result3)
