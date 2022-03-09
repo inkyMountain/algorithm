@@ -1,3 +1,5 @@
+// https://leetcode-cn.com/problems/shu-zu-zhong-de-ni-xu-dui-lcof/
+
 const reversePairs = (nums: number[]): number => {
   let amount = 0
   let groupLength = 1
@@ -15,7 +17,6 @@ const reversePairs = (nums: number[]): number => {
     }
     groupLength *= 2
   }
-  console.log(nums, amount)
   return amount
 }
 
@@ -30,10 +31,14 @@ function merge(
   const startRef = start
   let index = 0
   let amount = 0
+  // 归并排序的过程中，统计当左侧数组的数字要被放入 temp 数组时，
+  // 右侧指针左侧一共有几个数字。
   while (start < midRef && mid <= end) {
     if (nums[start] <= nums[mid]) {
       temp[index] = nums[start]
       start++
+      // mid - midRef: 右侧指针左侧一共有几个数字
+      // 这些数字比左指针指向的数字小，所以每个数字都可以和左指针数字构成一个逆序对。
       amount += mid - midRef
     } else {
       temp[index] = nums[mid]
@@ -45,7 +50,6 @@ function merge(
   if (mid > end) {
     from = start
     to = midRef - 1
-    // amount += (mid - midRef) * (to - from + 1)
   } else {
     from = mid
     to = end
@@ -62,7 +66,3 @@ function merge(
   }
   return amount
 }
-
-sort([2, 3, 1, 4])
-sort([2, 3, 1, 4, 1])
-sort([2, 3, 1, 4, 1, 1])
