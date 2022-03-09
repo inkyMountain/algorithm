@@ -1,68 +1,55 @@
-const reversePairs = (nums: number[]): number => {
-  let amount = 0
-  let groupLength = 1
-  // O(n) space
-  const temp = []
-  // O(nlogn) time
-  while (nums.length > groupLength) {
-    let start = 0
-    while (nums.length - start > groupLength) {
-      let mid = start + groupLength,
-        end = start + groupLength * 2 - 1
-      end = Math.min(nums.length - 1, end)
-      amount += merge(nums, start, mid, end, temp)
-      start = end + 1
-    }
-    groupLength *= 2
-  }
-  console.log(nums, amount)
-  return amount
-}
+/*
+ * @lc app=leetcode.cn id=287 lang=typescript
+ *
+ * [287] 寻找重复数
+ */
 
-function merge(
-  nums: number[],
-  start: number,
-  mid: number,
-  end: number,
-  temp: number[]
-) {
-  const midRef = mid
-  const startRef = start
-  let index = 0
-  let amount = 0
-  while (start < midRef && mid <= end) {
-    if (nums[start] <= nums[mid]) {
-      temp[index] = nums[start]
-      start++
-      amount += mid - midRef
-    } else {
-      temp[index] = nums[mid]
-      mid++
+// @lc code=start
+function findDuplicate(nums: number[]): number {
+  // 不修改原数组
+  // space O(1)
+  let slow = 0,
+    fast = 0
+  // [1, 2, 5, 4, 3, 3]
+  // 3, 1, 3, 4, 2
+  while (fast !== undefined) {
+    fast = nums[fast]
+    fast = nums[fast]
+    slow = nums[slow]
+    if (slow === fast) {
+      let slow2 = 0
+      while (slow !== slow2) {
+        slow = nums[slow]
+        slow2 = nums[slow2]
+      }
+      return slow
     }
-    index++
   }
-  let from, to
-  if (mid > end) {
-    from = start
-    to = midRef - 1
-    // amount += (mid - midRef) * (to - from + 1)
-  } else {
-    from = mid
-    to = end
-  }
-  for (let i = from; i <= to; i++) {
-    temp[index] = nums[i]
-    if (mid > end) {
-      amount += mid - midRef
-    }
-    index++
-  }
-  for (let i = startRef; i <= end; i++) {
-    nums[i] = temp[i - startRef]
-  }
-  return amount
 }
+// @lc code=end
 
-sort([2, 3, 1, 4])
-sort([2, 3, 1, 4, 1])
-sort([2, 3, 1, 4, 1, 1])
+// findDuplicate([3, 1, 3, 4, 2])
+findDuplicate([1, 2, 5, 4, 3, 3])
+
+
+// function findDuplicate(nums: number[]): number {
+//   // 不修改原数组
+//   // space O(1)
+//   let slow = 0,
+//     fast = 0
+//   // [1, 2, 5, 4, 3, 3]
+//   // 3, 1, 3, 4, 2
+//   while (fast !== undefined) {
+//     fast = nums[fast]
+//     fast = nums[fast]
+//     slow = nums[slow]
+//     if (nums[slow] === nums[fast]) {
+//       let slow2 = 0
+//       while (nums[slow] !== nums[slow2]) {
+//         slow = nums[slow]
+//         slow2 = nums[slow2]
+//       }
+//       return nums[slow]
+//     }
+//   }
+// }
