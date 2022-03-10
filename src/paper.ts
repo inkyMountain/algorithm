@@ -15,7 +15,6 @@ function isValidSudoku(board: string[][]): boolean {
   ) {
     set.clear()
     for (let row = row1; row <= row2; row++) {
-      set.clear()
       for (let col = col1; col <= col2; col++) {
         const num = board[row][col]
         if (num === '.') {
@@ -92,3 +91,18 @@ const range9: [[number, number], [number, number]] = [
 ]
 
 // @lc code=end
+
+export const result = isValidSudoku([
+  ['5', '3', '.', '.', '7', '.', '.', '.', '.'],
+  ['6', '.', '.', '1', '9', '5', '.', '.', '.'],
+  ['.', '9', '8', '.', '.', '.', '.', '6', '.'],
+  ['8', '.', '.', '.', '6', '.', '.', '.', '3'],
+  ['4', '.', '.', '8', '.', '3', '.', '.', '1'],
+  ['7', '.', '.', '.', '2', '.', '.', '.', '6'],
+  ['.', '6', '.', '.', '.', '.', '2', '8', '.'],
+  ['.', '.', '.', '4', '1', '9', '.', '.', '5'],
+  ['.', '.', '.', '.', '8', '.', '.', '7', '9'],
+])
+
+// should be true
+console.log(result)
