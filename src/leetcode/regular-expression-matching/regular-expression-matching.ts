@@ -1,3 +1,7 @@
+/**
+ * leetcode no.10
+ * https://leetcode-cn.com/problems/regular-expression-matching/
+ */
 export const isMatch = (s: string, p: string) => {
   if (s === null || p === null) return false
 
