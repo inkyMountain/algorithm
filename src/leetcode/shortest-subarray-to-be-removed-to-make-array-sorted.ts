@@ -17,11 +17,6 @@ function findLengthOfShortestSubarray(arr: number[]): number {
    * 如果 left 为 0 则返回 right - 1。
    * 如果 left 指向最后一位数字，则整个数组都是非下降序列。不需要删除子数组。
    *
-   * 将left缩小至第一个满足arr[left]小于等于arr[right]的地方，
-   * 记录此时的 right - left，然后将left复原。
-   * 将right放大至第一个满足arr[left]小于等于arr[right]的地方，
-   * 记录此时的 right - left，然后将right复原。
-   * 返回两个 right - left 中较小的那个。
    */
   while (arr[left + 1] >= arr[left]) {
     left++
@@ -29,7 +24,7 @@ function findLengthOfShortestSubarray(arr: number[]): number {
   while (arr[right - 1] <= arr[right]) {
     right--
   }
-  // 左侧没有非下降序列
+  // // 左侧没有非下降序列
   if (left === 0) {
     return arr[right] >= arr[left] ? lengthBetween(left, right) : right
   }
@@ -55,7 +50,8 @@ function findLengthOfShortestSubarray(arr: number[]): number {
 }
 
 function lengthBetween(start: number, end: number) {
-  return Math.abs(end - start) - 1
+  const [smaller, bigger] = start > end ? [end, start] : [start, end]
+  return bigger - smaller - 1
 }
 
 // @lc code=end
