@@ -4,6 +4,18 @@
  * [166] 分数到小数
  */
 
+/**
+ * 整数除法的结果，有三种情况：
+ * - 整数
+ * - 有限位小数
+ * - 无限位循环小数
+ * 
+ * 分别处理整数和小数部分。
+ * 对于小数部分，首先将余数乘以10，然后除以被除数。得到新的余数，重复乘以10除以被除数的步骤。
+ * 每次乘以10后，将乘以10后的余数和index记录在map中。若下一次乘以10的余数在map中出现，
+ * 说明小数部分出现了循环。
+ * 注意点：负号的处理。需要先判断结果的正负，然后算出绝对值结果，组合后返回。
+ */
 // @lc code=start
 function normalizeResult(absolute: string, isPositive: boolean) {
   const withMinus = isPositive ? absolute : '-' + absolute
