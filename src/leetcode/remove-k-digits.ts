@@ -25,63 +25,42 @@
  * num 正整数
  * k 正整数
  */
+
 function removeKdigits(num: string, k: number): string {
-  if (num.length <= k) {
-    return '0'
-  }
-  const numLength = num.length
-  const tokens = num.split('')
-  const substringLength = numLength - k
-  let substring = tokens.slice(0, substringLength)
-  const temp = []
-  // 0123 45   i 为4，j为0, k为0
-  // 后续的每一个新数字
-  for (let i = substring.length; i < numLength; i++) {
-    const token = tokens[i]
-    const min = [...substring]
-    // 要替换substring中的第j个数字
-    for (let j = 0; j < substring.length; j++) {
-      // 生成替换后的数字
-      for (let k = 0; k < substring.length; k++) {
-        if (k === j) {
-          temp[k] = token
-        } else {
-          temp[k] = substring[k]
-        }
-      }
-      temp.splice(j, 1)
-      temp.push(token)
-      if (isSmaller(temp, min)) {
-        copy(min, temp)
-      }
+  const stack = []
+
+  let deleted = 0
+  for (let i = 0; i < num.length; i++) {
+    const digit = num[i]
+    while (
+      stack.length > 0 &&
+      isSmaller(digit, stack[stack.length - 1]) &&
+      deleted < k
+    ) {
+      stack.pop()
+      deleted++
     }
-    if (isSmaller(min, substring)) {
-      copy(substring, min)
-    }
+    stack.push(digit)
   }
-  return parseInt(substring.join('')).toString()
+  let result = ''
+  for (let i = 0; i < num.length - k; i++) {
+    result += stack[i]
+  }
+  return result.replace(/^0+/g, '') || '0'
 }
 
-function isSmaller(nums1: string[], nums2: string[]) {
-  // for (let i = 0; i < nums1.length; i++) {
-  //   if (nums2[i].charCodeAt(0) > nums1[i].charCodeAt(0)) {
-  //     return true
-  //   }
-  // }
-  // return false
-  return parseInt(nums1.join('')) < parseInt(nums2.join(''))
+function isSmaller(a: string, b: string) {
+  return a.charCodeAt(0) < b.charCodeAt(0)
 }
 
-function copy(nums1: string[], nums2: string[]) {
-  for (let i = 0; i < nums1.length; i++) {
-    nums1[i] = nums2[i]
-  }
-}
 // @lc code=end
 
 test('remove-k-digits', () => {
-  expect(removeKdigits('1432219', 3)).toStrictEqual('1219')
   expect(removeKdigits('13221', 1)).toStrictEqual('1221')
   expect(removeKdigits('10200', 1)).toStrictEqual('200')
   expect(removeKdigits('100', 1)).toStrictEqual('0')
+  expect(removeKdigits('001', 0)).toStrictEqual('1')
+  expect(removeKdigits('1432219', 3)).toStrictEqual('1219')
+  expect(removeKdigits('112', 1)).toStrictEqual('11')
+  expect(removeKdigits('123454321', 7)).toStrictEqual('11')
 })
