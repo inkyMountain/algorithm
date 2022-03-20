@@ -26,7 +26,9 @@ function maxRepOpt1(text: string): number {
         longestRangeLength = ranges[0].length,
         longestRangeIndex = 0
       ranges.forEach(([start, end], index) => {
+        // 不管后续如何，把每一段范围都当做可能的结果，去更新result变量。
         result = Math.max(result, end - start + 1)
+        // 如果有两段范围只隔了一个字符，则记录下右边范围在ranges中的index。
         if (start - ranges[index - 1]?.[1] === 2) {
           const rangeSum =
             end - start + 1 + ranges[index - 1][1] - ranges[index - 1][0] + 1
@@ -34,21 +36,27 @@ function maxRepOpt1(text: string): number {
             neighborIndex = index
             neighborLengthSum = rangeSum
           } else if (rangeSum > neighborLengthSum) {
+            // 如果是第二次碰到间隔为1的范围对，只有它们的长度和大于上一次的长度和，
+            // 才会去更新index和sum。
             neighborIndex = index
             neighborLengthSum = rangeSum
           }
         }
+        // 记录下长度最长的范围
         if (end - start + 1 > longestRangeLength) {
           longestRangeLength = end - start + 1
           longestRangeIndex = index
         }
       })
+      // 如果没有间隔为1的范围对，那么最长的那个范围 +1 就是答案。
       result = Math.max(result, longestRangeLength + 1)
+      // 但如果有，那么从其他地方移一个字符过来，让它们连起来。
       if (neighborIndex !== undefined) {
         const leftRange = ranges[neighborIndex - 1]
         const rightRange = ranges[neighborIndex]
         result = Math.max(
           result,
+          // 如果只有两个范围，那么
           ranges.length === 2
             ? rightRange[1] - leftRange[0]
             : rightRange[1] - leftRange[0] + 1
@@ -60,6 +68,13 @@ function maxRepOpt1(text: string): number {
   return result
 }
 
+/**
+ * e.g.
+ * {
+ *  a: [[0, 1], [4, 5]],
+ *  b: [2, 3]
+ * }
+ */
 function toCharRanges(text: string) {
   text += '.'
   const charRanges: Record<string, Array<Array<number>>> = {}
