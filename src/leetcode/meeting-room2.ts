@@ -1,3 +1,4 @@
+// leetcode 253
 function minMeetingRooms(intervals: number[][]): number {
   /**
    * time n, time nlogn
