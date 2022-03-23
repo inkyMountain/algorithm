@@ -29,7 +29,7 @@
  * 此时 i 接水量
  * = Math.min(iLeftMax, iRightMax) - height[i]
  * = iLeftMax - height[i]
- * 
+ *
  * 单调栈做法：
  * 以 [3, 2, 1, 4] 为例，从左往右遍历该数组，并维护一个数字索引的单调栈。
  * 以 1 和 4 为例，4 第一个比 1 大的数字，
@@ -41,23 +41,31 @@
  * = (3 - 1 - 1) *  (Math.min(height[previous], height[3]) - height[2])
  */
 function trap(height: number[]): number {
-  let ans = 0
-  const stack = []
-  const n = height.length
-  for (let i = 0; i < n; ++i) {
-    while (stack.length && height[i] > height[stack[stack.length - 1]]) {
-      const top = stack.pop()
-      if (!stack.length) {
-        break
+  let result = 0
+
+  let i = 0,
+    j = height.length - 1,
+    leftMax = 0,
+    rightMax = 0
+  while (i <= j) {
+    if (leftMax >= rightMax) {
+      const volumn = rightMax - height[j]
+      if (volumn > 0) {
+        result += volumn
       }
-      const left = stack[stack.length - 1]
-      const currWidth = i - left - 1
-      const currHeight = Math.min(height[left], height[i]) - height[top]
-      ans += currWidth * currHeight
+      rightMax = Math.max(rightMax, height[j])
+      j--
+    } else {
+      const volumn = leftMax - height[i]
+      if (volumn > 0) {
+        result += volumn
+      }
+      leftMax = Math.max(leftMax, height[i])
+      i++
     }
-    stack.push(i)
   }
-  return ans
+
+  return result
 }
 
 // @lc code=end
