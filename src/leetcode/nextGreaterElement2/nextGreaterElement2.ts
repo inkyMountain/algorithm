@@ -58,3 +58,27 @@ export function nextGreaterElements(nums: number[]): number[] {
   result.length = nums.length
   return result
 }
+
+// 2022.4.5 redo
+// function nextGreaterElements(nums: number[]): number[] {
+//   function getElementAt(index: number) {
+//     const length = nums.length
+//     index = index % length
+//     return nums[index]
+//   }
+
+//   // 递减：栈底 -> 栈顶
+//   const stack: number[] = []
+//   const result: number[] = new Array(nums.length).fill(-1)
+//   for (let i = 0; i < nums.length * 2; i++) {
+//     while (
+//       stack.length > 0 &&
+//       getElementAt(i) > getElementAt(stack[stack.length - 1])
+//     ) {
+//       const top = stack.pop()
+//       result[top] = getElementAt(i)
+//     }
+//     stack.push(i)
+//   }
+//   return result.slice(0, nums.length)
+// }
