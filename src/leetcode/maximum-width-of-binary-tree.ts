@@ -1,4 +1,3 @@
-import {generateRootTreeNode} from '../dataStructure/generateRootTreeNode/generateRootTreeNode'
 /*
  * @lc app=leetcode.cn id=662 lang=typescript
  *
@@ -65,6 +64,6 @@ describe('maximum-width-of-binary-tree', () => {
           new TreeNode(2, null, new TreeNode(9, new TreeNode(7)))
         )
       )
-    ).toStrictEqual(7)
+    ).toStrictEqual(7n)
   })
 })
