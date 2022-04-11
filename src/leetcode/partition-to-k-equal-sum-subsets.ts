@@ -6,10 +6,19 @@
 
 // @lc code=start
 function canPartitionKSubsets(nums: number[], k: number): boolean {
+  if (k === 1) {
+    return true
+  }
   const N = nums.length
   const sum = nums.reduce((sum, num) => sum + num, 0)
   const subsetSum = sum / k
+  if (sum % k !== 0) {
+    return false
+  }
   nums.sort((a, b) => a - b)
+  if (nums[nums.length - 1] > subsetSum) {
+    return false
+  }
   const MAX_STATE = (1 << N) - 1 // 1 <= N <= 16
   let dp = new Array(MAX_STATE + 1).fill(null)
   dp[0] = 0
@@ -22,6 +31,13 @@ function canPartitionKSubsets(nums: number[], k: number): boolean {
    * 如果是 0，代表当前位的数字没有被选中，当前状态不可能成立。
    * 这样一来，每次寻找 prevState 时，都是将某一位的 1 变成 0。
    * 由于 state 是从小到大遍历的，所以 prevState 一定先于 state 被处理。
+   * 
+   * 另外，在力扣官解中，使用的是 state => nextState 的推导，
+   * 这与本解的思路基本类似，仅有细微差别，包括：
+   * - state 从 0 开始
+   * - MAX_STATE 为 1 << N
+   * - 循环中 state < MAX_STATE
+   * - state 的当前位需要是 0，如果与 iBit 的 | 操作不为 0 则 continue。
    */
   for (let state = 1; state <= MAX_STATE; ++state) {
     // O(2^N)
