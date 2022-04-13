@@ -6,69 +6,45 @@
 
 // @lc code=start
 /**
- * 1[a2[b3[c]4[d]]]
- * abcccddddbcccdddd
- * digits:
- * letters:  abcccddddbcccdddd
- * brackets:
- *
- * 1[a2[b]]
- * (\d+)|([a-z]+)|(\[)|(\])
- * digits:   1
- * letters:  abb
- * brackets: [
- *
- * 解决方法是通过遍历，使用三个栈来保存遍历过程中遇到的元素。
- * 它们分别是 digits(存储数字) letters(存储字母) brackets(存储括号)
- * 当遇到数字时就推入 digits 数组，遇到字母就推入 letters 数组。
- * 当遇到左括号，推入 brackets 数组。
- * 但如果是右括号，则从 digits 和 letters 各弹出一个元素(记数字为 num，字母为 letter)，
- * 将 letter 重复 num 遍，再与 letters 栈顶元素相加，然后继续遍历，直到遍历完成。
- * 此时返回 letters[0] 就是答案。
- *
- * 将字符串分解成数组的正则：
- * '11[a2[b]]'.split(/(\d+)|([a-z]+)|(\[)|(\])/).filter(Boolean)
+ * 首先需要将字符串分解成 token。这是因为里面的数字和字母可以是复数个。
+ * 比如 1[abc2[a]] 中的 abc，如果不将 abc 提取为单独的 token，
+ * 处理会比较麻烦。这里可以采用正则，str.split(/()/)，
+ * 里面的括号表示不要舍弃正则命中的值。
+ * 之后遍历tokens，push 进 stack 数组。如果遇到 ]，则开始解码。
+ * 如果是字母，持续与栈顶合并，直到栈顶不是字母。
  */
 function decodeString(s: string): string {
-  // s = `[${s}]`
-  // const digits: string[] = [],
-  //   letters: string[] = [],
-  //   brackets: string[] = []
-  // const tokens = s.split(/(\d+)|([a-z]+)|(\[)|(\])/).filter(Boolean)
-  // const length = tokens.length
-  // for (let i = 0; i < length; i++) {
-  //   const current = tokens[i]
-  //   if (isNumber(current)) {
-  //     digits.push(current)
-  //   } else if (isLetter(current)) {
-  //     if (isLetter(tokens[i - 1])) {
-  //       letters[i - 1] += current
-  //     } else {
-  //       letters.push(current)
-  //     }
-  //   } else if (current === '[') {
-  //     brackets.push(current)
-  //   }
-  //   // ]
-  //   else {
-  //     const letter = letters.pop() || ''
-  //     let multiple = letter
-  //     const digit = digits.pop() || 1
-  //     brackets.pop()
-  //     for (let j = 1; j < +digit; j++) {
-  //       multiple += letter
-  //     }
-  //     const tail = letters.pop() || ''
-  //     letters.push(tail + multiple)
-  //   }
-  // }
-  // return letters[0]
   s = `[${s}]`
   const tokens = s.split(/(\d+)|([a-z]+)|(\[)|(\])/).filter(Boolean)
   const stack: string[] = []
+  // [3[z]2[2[y]pq4[2[jk]e1[f]]]ef]
   for (let i = 0; i < tokens.length; i++) {
-    
+    const token = tokens[i]
+    if (isLetter(token)) {
+      pushLetter(stack, token)
+    } else if (token === ']') {
+      const top = stack.pop()
+      // pop the [
+      stack.pop()
+      const digit = parseInt(stack.pop()) || 1
+      let multiple = ''
+      for (let i = 0; i < digit; i++) {
+        multiple += top
+      }
+      pushLetter(stack, multiple)
+    } else {
+      stack.push(token)
+    }
   }
+  return stack[0]
+}
+
+function pushLetter(stack: string[], target: string) {
+  while (stack.length > 0 && isLetter(stack[stack.length - 1])) {
+    const top = stack.pop()
+    target = top + target
+  }
+  stack.push(target)
 }
 
 function isNumber(target: any) {
@@ -88,6 +64,5 @@ describe('decode string', () => {
     expect(decodeString('3[z]2[2[y]pq4[2[jk]e1[f]]]ef')).toStrictEqual(
       'zzzyypqjkjkefjkjkefjkjkefjkjkefyypqjkjkefjkjkefjkjkefjkjkefef'
     )
-    // zzz2[yypqjkjkefjkjkefjkjkefjkjkef]ef
   })
 })
