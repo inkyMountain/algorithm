@@ -35,10 +35,55 @@ function distanceK(
   target: TreeNode | null,
   k: number
 ): number[] {
-  function helper(node: TreeNode | null, parent: TreeNode | null) {}
+  const result: number[] = []
+  const parentMap = new Map<TreeNode, TreeNode>()
+  function findParentOf(node: TreeNode | null, parent: TreeNode | null) {
+    if (node === null) {
+      return
+    }
+    if (parent !== null) {
+      parentMap.set(node, parent)
+    }
+    findParentOf(node.left, node)
+    findParentOf(node.right, node)
+  }
+  // 将每个节点的父节点放入map中
+  findParentOf(root, null)
 
-  helper(root, null)
+  /**
+   *     1
+   *    2 3
+   *  4 5 6 7
+   */
+
+  /**
+   * depth 从 -1 开始，然后 target 是 0，target 相邻的节点就是 1。
+   * 这样一来，遍历到某个节点时，当前的 depth 就是该节点和之间 target 的距离。
+   * 另外在深度递归的时候，需要带上 from 来标记是从哪一个节点过来的，
+   * 从而避免循环往复的递归。
+   */
+  let depth = -1
+  function dfs(node: TreeNode | null, from: TreeNode | null) {
+    if (node === null) {
+      return
+    }
+    depth++
+    if (depth === k) {
+      result.push(node.val)
+    }
+    const parent = parentMap.get(node) || null
+    if (parent !== from) {
+      dfs(parent, node)
+    }
+    if (node.left !== from) {
+      dfs(node.left, node)
+    }
+    if (node.right !== from) {
+      dfs(node.right, node)
+    }
+    depth--
+  }
+  dfs(target, null)
+  return result
 }
-
-function dfs(node: TreeNode | null, callback: (node: TreeNode) => void) {}
 // @lc code=end
