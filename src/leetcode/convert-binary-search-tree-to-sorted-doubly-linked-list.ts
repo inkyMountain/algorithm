@@ -45,6 +45,10 @@ export class Node {
  * 所以可以采用两个变量（previous & current）代替数组。
  * 每次 push 时，previous = current, current = node, link(previous, current)。
  * 最后将头尾两个 node 连接，就完成操作了。
+ * 
+ * 注意：由于 dfs 的空间复杂度是 O(n)，所以这个解法并没有将空间复杂度下降一个数量级。
+ * 只是将 2n 变成 n，速度上会稍微快一点。
+ * 除非使用 morris 遍历，可以将空间复杂度降低为 O(1)。
  */
 function treeToDoublyList(root: Node | null): Node | null {
   if (root === null) {
