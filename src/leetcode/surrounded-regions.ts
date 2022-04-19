@@ -48,6 +48,8 @@ function solve(board: string[][]): void {
        */
       if (
         board[nextRow]?.[nextCol] === 'O' &&
+        // 为什么要加这个判断？假设输入的 board 全都是 'O'，
+        // 那么不加这句的话，就会无限递归下去，因为没有判断终止的条件。
         borderRegions[nextRow][nextCol] === false
       ) {
         dfs(nextRow, nextCol, callback)
