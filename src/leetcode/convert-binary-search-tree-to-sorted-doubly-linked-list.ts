@@ -39,10 +39,7 @@ export class Node {
 // }
 
 /**
- * todo
- * 优化dfs过程，每次push node，都将该node和数组中的上一个node连接起来，
- * 然后 shift 上一个 node。由于 JS 中 shift 效率很低，
- * 所以可以采用两个变量（previous & current）代替数组。
+ * 可以采用两个变量（previous & current）代替数组。
  * 每次 push 时，previous = current, current = node, link(previous, current)。
  * 最后将头尾两个 node 连接，就完成操作了。
  * 
