@@ -16,8 +16,13 @@
  *
  * time O(m*n)
  * space O(m*n)
+ * 
+ * 另外，可参照官解的思路，首先遍历边界上的格子，将所有的O原地修改为A（任意一个不等于O或者X的标记。）
+ * 然后遍历所有的格子，如果是O，则修改为X。如果是A，则复原成O。
+ * 这么做可以简化一些代码，空间复杂度变为原来的一半（但是并没有出现数量级的变化）。
  */
 // @lc code=start
+
 /**
  Do not return anything, modify board in-place instead.
  */
