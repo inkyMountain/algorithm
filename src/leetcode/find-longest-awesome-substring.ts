@@ -23,6 +23,36 @@
  * 那么它们的差就全是偶数，这同样符合超赞字符串的定义。
  */
 function longestAwesome(s: string): number {
+  const prefix: Record<number, number> = {0: -1}
+  const length = s.length
+  let status = 0,
+    max = 0
+  for (let i = 0; i < length; i++) {
+    const num = parseInt(s[i])
+    // num 为当前遍历中的数字，改变对应的status位数的奇偶性。
+    status = status ^ (1 << num)
 
+    for (let bitLocation = 0; bitLocation < 10; bitLocation++) {
+      const bit = 1 << bitLocation
+      // 将其中的一位的奇偶性进行翻转，然后去匹配。
+      const matchAfterFlipped = prefix[status ^ bit]
+      // 如果匹配中了，就可能是结果之一，去更新max变量。
+      if (matchAfterFlipped !== undefined) {
+        max = Math.max(max, i - matchAfterFlipped)
+      }
+    }
+
+    const match = prefix[status]
+    if (match === undefined) {
+      prefix[status] = i
+    } else {
+      max = Math.max(max, i - match)
+    }
+  }
+
+  return max
 }
 // @lc code=end
+
+// should be 5 and 3
+console.log(longestAwesome('3242415'), longestAwesome('350844'))
