@@ -1,32 +1,51 @@
 /*
- * @lc app=leetcode.cn id=337 lang=typescript
+ * @lc app=leetcode.cn id=207 lang=typescript
  *
- * [337] 打家劫舍 III
+ * [207] 课程表
  */
-export class TreeNode {
-  val: number
-  left: TreeNode | null
-  right: TreeNode | null
-  constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
-    this.val = val === undefined ? 0 : val
-    this.left = left === undefined ? null : left
-    this.right = right === undefined ? null : right
-  }
-}
 
 // @lc code=start
-function rob(root: TreeNode | null): number {
-  const amountMap = new Map<TreeNode, [number, number]>()
-
-  function dfs(node: TreeNode | null) {
-    if (node === null) {
-      return
+function canFinish(numCourses: number, prerequisites: number[][]): boolean {
+  const queue: number[] = []
+  const nextCourseMap = new Map<number, Set<number>>()
+  const preCourseMap = new Map<number, Set<number>>()
+  for (let i = 0; i < prerequisites.length; i++) {
+    const [pre, next] = prerequisites[i]
+    if (!nextCourseMap.get(pre)) {
+      nextCourseMap.set(pre, new Set())
     }
-    dfs(node.left)
-    dfs(node.right)
+    nextCourseMap.get(pre).add(next)
+
+    if (!preCourseMap.get(next)) {
+      preCourseMap.set(next, new Set())
+    }
+    preCourseMap.get(next).add(pre)
   }
 
-  dfs(root)
-  return Math.max(...amountMap.get(root))
+  for (let [course, set] of preCourseMap) {
+    if (set.size === 0) {
+      queue.push(course)
+    }
+  }
+
+  let completeCourseNumber = 0
+
+  while (queue.length > 0) {
+    const head = queue.shift()
+    const courses = [...nextCourseMap.get(head)]
+    for (let i = 0; i < courses.length; i++) {
+      const course = courses[i]
+      const set = preCourseMap.get(course)
+      set.delete(course)
+      if (set.size === 0) {
+        queue.push(course)
+      }
+    }
+    completeCourseNumber++
+  }
+
+  return completeCourseNumber === numCourses
 }
 // @lc code=end
+
+console.log(canFinish(2, [[1, 0]]))
