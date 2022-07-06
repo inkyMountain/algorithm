@@ -1,40 +1,60 @@
-export function mergeSort(array: Array<number>) {
-  let sublength = 1
-  // 确保数组仍可以被分割为 >= 2块
-  while (array.length > sublength) {
-    let index = 0
-    // 确保第二块的长度 >= 1
-    while (array.length - index > sublength) {
+export function mergeSort(nums: number[]) {
+  let subarrayLength = 1
+  const length = nums.length
+  // 注意点：不要写成 subarrayLength < length - 1
+  // 如果希望凑齐两个子数组，那么子数组长度一定比总数组长度要短。
+  while (subarrayLength < length) {
+    let startIndex = 0
+    // length - startIndex 是剩余的数字个数，一定要比子数组长，
+    // 才能凑齐两个子数组。
+    while (length - startIndex > subarrayLength) {
       merge(
-        array,
-        index,
-        index + sublength - 1,
-        index + sublength * 2 - 1
+        nums,
+        startIndex,
+        // 注意 -1
+        startIndex + subarrayLength - 1,
+        startIndex + subarrayLength,
+        // 注意Math.min和-1
+        Math.min(startIndex + subarrayLength * 2 - 1, length - 1)
       )
-      index = index + sublength * 2
+      startIndex += subarrayLength * 2
     }
-    sublength = sublength * 2
+    subarrayLength *= 2
   }
-  return array
+  return nums
 }
 
+const temp = []
 function merge(
-  array: Array<number>,
-  start: number,
-  middle: number,
-  right: number
+  nums: number[],
+  start1: number,
+  end1: number,
+  start2: number,
+  end2: number
 ) {
-  right = Math.min(array.length - 1, right)
-  while (start <= middle && middle < right) {
-    const value1 = array[start]
-    const value2 = array[middle + 1]
-    if (value1 < value2) {
-      start++
+  let index1 = start1,
+    index2 = start2,
+    index = 0
+  // 需要是 &&，确保两个指针都没有超过对应的end。
+  while (index1 <= end1 && index2 <= end2) {
+    if (nums[index1] < nums[index2]) {
+      temp[index] = nums[index1]
+      index1++
     } else {
-      const smallerValue = array.splice(middle + 1, 1)
-      array.splice(start, 0, smallerValue[0])
-      start++
-      middle++
+      temp[index] = nums[index2]
+      index2++
     }
+    index++
+  }
+  // 找到还没到达终点的指针
+  // 注意是 index <= end1，不要漏了 =。
+  let slowIndex = index1 <= end1 ? index1 : index2
+  const end = index1 <= end1 ? end1 : end2
+  while (slowIndex <= end) {
+    temp[index] = nums[slowIndex]
+    slowIndex++, index++
+  }
+  for (let i = 0; i < index; i++) {
+    nums[i + start1] = temp[i]
   }
 }
