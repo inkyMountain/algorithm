@@ -8,7 +8,7 @@
  * 注意事项：
  * - ListNode 需要有 key & value 属性。
  * - LinkedList size 属性需要随着新增与删除而变化。
- * - 
+ * - 删除与新增节点时，注意节点的双向箭头。最好提取一个connect方法，连接两个节点。
  */
 // @lc code=start
 class ListNode {
